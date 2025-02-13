@@ -1,14 +1,13 @@
-import { ethers } from 'hardhat';
+import { ethers } from "hardhat";
 
 async function main() {
-    const initialSupply = ethers.utils.parseUnits("1000000", 18); // 1M tokens with 18 decimals
+    const initialSupply = ethers.parseUnits("1000000", 18); // 1M tokens with 18 decimals
 
-    const Token = await ethers.getContractFactory('MyToken');
-    const token = await Token.deploy(initialSupply);
+    const token = await ethers.deployContract("MyToken", [initialSupply]);
 
-    await token.deployed();
+    await token.waitForDeployment();
 
-    console.log('Token Contract Deployed at:', token.address);
+    console.log("Token Contract Deployed at:" + token.target);
 }
 
 main().catch((error) => {
